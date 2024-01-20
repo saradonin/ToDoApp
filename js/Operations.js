@@ -29,8 +29,9 @@ const Operations = ({ form, task, operations, onUpdateOperation}) => {
     }
 
     useEffect(() => {
-        setOperationsList(operations)
-    }, [operations, operationUpdateTrigger]);
+        // setOperationsList(operations)
+        onUpdateOperation()
+    }, [operationUpdateTrigger]);
 
     return (
         <>
@@ -61,8 +62,8 @@ const Operations = ({ form, task, operations, onUpdateOperation}) => {
 
             <ul className="list-group list-group-flush">
                 {
-                    operationsList.length > 0 &&
-                    operationsList.map((operation) => (
+                    operations.length > 0 &&
+                    operations.map((operation) => (
                         <Operation key={operation.id}
                                    operation={operation}
                                    onUpdate={handleUpdateOperations}/>
