@@ -49,3 +49,24 @@ export const addNewOperation = async (taskId, operationData) => {
         console.log(err);
     }
 }
+
+export const deleteOperation = async (operationId) => {
+    try {
+        const response = await fetch(`${API_URL}/operations/${operationId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: API_KEY,
+            },
+        })
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Failed to delete operation. Server response:', errorData);
+            throw new Error(`Failed to delete operation. Status: ${response.status}`);
+        }
+        console.log('Successfully deleted operation.');
+
+    } catch (err) {
+        console.log(err);
+    }
+
+}

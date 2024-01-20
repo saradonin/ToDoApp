@@ -1,7 +1,13 @@
 import React, {useState} from "react";
+import {deleteOperation} from "./api/operations";
 
-const Operation = ({operation}) => {
+const Operation = ({operation, onUpdate}) => {
     const [currentOperation, setCurrentOperation] = useState(operation)
+
+    const handleDeleteOperation = async () => {
+        await deleteOperation(operation.id)
+        onUpdate()
+    }
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -35,7 +41,9 @@ const Operation = ({operation}) => {
                     <i className="fas fa-clock ml-1"></i>
                 </button>
 
-                <button className="btn btn-outline-danger btn-sm"><i className="fas fa-trash"></i></button>
+                <button className="btn btn-outline-danger btn-sm"
+                        onClick={handleDeleteOperation}
+                ><i className="fas fa-trash"></i></button>
             </div>
         </li>
     )

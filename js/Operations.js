@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import Operation from "./Operation";
-import {addNewOperation} from "./api/operations";
+import {addNewOperation, getOperations} from "./api/operations";
 
-const Operations = ({ form, task, operations, onNewOperation}) => {
+const Operations = ({ form, task, operations, onUpdateOperation}) => {
 
     const [newOperation, setNewOperation] = useState({description: "", timeSpent: 0})
     const [operationsList, setOperationsList] = useState(operations)
+    const [operationUpdateTrigger, setOperationUpdateTrigger] = useState(false)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -15,17 +16,22 @@ const Operations = ({ form, task, operations, onNewOperation}) => {
         }))
     }
 
-    const handleAddOperation = (e) => {
+    const handleAddOperation = async (e) => {
         e.preventDefault()
         console.log(newOperation)
-        addNewOperation(task.id, newOperation)
-        onNewOperation()
+        await addNewOperation(task.id, newOperation)
+        onUpdateOperation()
         setNewOperation({description: "", timeSpent: 0})
+    }
+
+    const handleUpdateOperations = async () => {
+        await setOperationUpdateTrigger(prevState => !prevState)
     }
 
     useEffect(() => {
         setOperationsList(operations)
-    }, [operations, onNewOperation]);
+        onUpdateOperation()
+    }, [operations, operationUpdateTrigger]);
 
     return (
         <>
@@ -59,7 +65,8 @@ const Operations = ({ form, task, operations, onNewOperation}) => {
                     operationsList.length > 0 &&
                     operationsList.map((operation) => (
                         <Operation key={operation.id}
-                                   operation={operation}/>
+                                   operation={operation}
+                                   onUpdate={handleUpdateOperations}/>
                     ))
                 }
             </ul>

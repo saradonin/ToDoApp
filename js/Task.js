@@ -3,7 +3,7 @@ import {deleteTask, updateTask} from "./api/tasks";
 import {getOperations} from "./api/operations";
 import Operations from "./Operations";
 
-const Task = ({ task, onUpdate }) => {
+const Task = ({ task, onUpdateTask }) => {
 
     const [currentTask, setCurrentTask] = useState(task)
     const [operations, setOperations] = useState([])
@@ -12,7 +12,7 @@ const Task = ({ task, onUpdate }) => {
 
     const handleDeleteTask = async () => {
         await deleteTask(currentTask.id)
-        onUpdate()
+        onUpdateTask()
     }
 
     const handleUpdateTask = () => {
@@ -38,7 +38,7 @@ const Task = ({ task, onUpdate }) => {
 
     useEffect(() => {
         updateTask(currentTask)
-        onUpdate()
+        onUpdateTask()
     }, [currentTask]);
 
     return (
@@ -82,7 +82,7 @@ const Task = ({ task, onUpdate }) => {
                 <Operations operations={operations}
                             task={currentTask}
                             form={addOperationForm}
-                            onNewOperation={updateOperationList}/>}
+                            onUpdateOperation={updateOperationList}/>}
         </section>
     )
 }
