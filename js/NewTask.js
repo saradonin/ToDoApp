@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {addNewTask, getTasks} from "./api/tasks";
 
-const NewTask = ( {onNewTask} ) => {
+const NewTask = ( { onNewTask } ) => {
 
     const [newTask, setNewTask] = useState({
         title: "",

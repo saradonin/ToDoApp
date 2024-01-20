@@ -25,7 +25,7 @@ export const getTasks = async (successCallback) => {
 };
 
 /**
- * Add new task
+ * Adds new task
  * @param taskData
  */
 export const addNewTask = async (taskData) => {
@@ -53,5 +53,24 @@ export const addNewTask = async (taskData) => {
     } catch (err) {
         console.log(err);
     }
-};
+}
+
+export const deleteTask = async (taskId) => {
+    try {
+        const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: API_KEY,
+            },
+        })
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Failed to add task. Server response:', errorData);
+            throw new Error(`Failed to add task. Status: ${response.status}`);
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+}
 

@@ -7,23 +7,25 @@ import {getTasks} from "./api/tasks";
 
 const App = () => {
     const [tasks, setTasks] = useState([])
-    const [trigger, setTrigger] = useState(false)
+    const [taskUpdateTrigger, setTaskUpdateTrigger] = useState(false)
 
     useEffect(() => {
         getTasks((data) => {
             setTasks(data)
-            console.log("tasks:", tasks)
         })
-    }, [trigger]);
+    }, [taskUpdateTrigger]);
 
-    const handleNewTask = (newTaskData) => {
-        setTrigger(prevState => !prevState)
+    const updateTaskList = (newTaskData) => {
+        setTaskUpdateTrigger(prevState => !prevState)
     }
 
     return (
         <>
-            <NewTask onNewTask={handleNewTask}/>
-            {tasks && tasks.map((task) => <Task key={task.id} task={task}/>)}
+            <NewTask onNewTask={updateTaskList}/>
+            {tasks && tasks.map((task) => <Task
+                key={task.id}
+                task={task}
+                onDelete={updateTaskList}/>)}
         </>
     )
 }

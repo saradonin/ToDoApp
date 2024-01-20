@@ -1,6 +1,12 @@
 import React, {useState} from "react";
+import {deleteTask} from "./api/tasks";
 
-const Task = ({ task }) => {
+const Task = ({ task, onDelete }) => {
+
+    const handleDeleteTask = () => {
+        deleteTask(task.id)
+        onDelete()
+    }
     return (
         <section className="card mt-5 shadow-sm">
             <div className="card-header d-flex justify-content-between align-items-center">
@@ -27,7 +33,8 @@ const Task = ({ task }) => {
 
                     {/*Przycisk usuwania ma być widoczny tylko*/}
                     {/*jeżeli nie ma żadnych operacji w zadaniu*/}
-                    <button className="btn btn-outline-danger btn-sm ml-2">
+                    <button className="btn btn-outline-danger btn-sm ml-2"
+                    onClick={handleDeleteTask}>
                         <i className="fas fa-trash false"></i>
                     </button>
                 </div>
