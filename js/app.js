@@ -9,15 +9,15 @@ const App = () => {
     const [tasks, setTasks] = useState([])
     const [taskUpdateTrigger, setTaskUpdateTrigger] = useState(false)
 
+    const updateTaskList = async () => {
+        await setTaskUpdateTrigger(prevState => !prevState)
+    }
+
     useEffect(() => {
         getTasks((data) => {
             setTasks(data)
         })
     }, [taskUpdateTrigger]);
-
-    const updateTaskList = (newTaskData) => {
-        setTaskUpdateTrigger(prevState => !prevState)
-    }
 
     return (
         <>
@@ -25,7 +25,7 @@ const App = () => {
             {tasks && tasks.map((task) => <Task
                 key={task.id}
                 task={task}
-                onDelete={updateTaskList}/>)}
+                onUpdate={updateTaskList}/>)}
         </>
     )
 }

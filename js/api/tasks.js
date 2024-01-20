@@ -74,3 +74,30 @@ export const deleteTask = async (taskId) => {
     }
 }
 
+export const updateTask = async (taskData) => {
+    try {
+        console.log(JSON.stringify(taskData))
+        const response = await fetch(`${API_URL}/tasks/${taskData.id}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: API_KEY,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(taskData)
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Failed to update task. Server response:', errorData);
+            throw new Error(`Failed to update task. Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Successfully updated task:', data);
+
+        return data;
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+

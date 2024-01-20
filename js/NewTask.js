@@ -28,7 +28,6 @@ const NewTask = ( { onNewTask } ) => {
         })
     }
 
-
     return (
         <div className="card shadow">
             <div className="card-body">
@@ -38,6 +37,7 @@ const NewTask = ( { onNewTask } ) => {
                         <input type="text"
                                className="form-control"
                                name="title"
+                               value={newTask.title}
                                onChange={handleChange}
                                placeholder="Title"/>
                     </div>
@@ -45,6 +45,7 @@ const NewTask = ( { onNewTask } ) => {
                         <input type="text"
                                className="form-control"
                                name="description"
+                               value={newTask.description}
                                onChange={handleChange}
                                placeholder="Description"/>
                     </div>
