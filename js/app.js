@@ -1,8 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 import { createRoot } from "react-dom/client";
+import NewTask from "./NewTask";
+import Task from "./Task";
 
-function App() {
-  return <h1>Hello World</h1>;
+
+const Main = () => {
+  return (
+      <>
+        <NewTask/>
+        <Task/>
+      </>
+  )
+}
+
+const App = () => {
+  const [tasks, setTasks] = useState([])
+
+  return <Main/>
 }
 
 const container = document.getElementById("app");
