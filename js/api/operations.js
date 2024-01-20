@@ -24,3 +24,28 @@ export const getOperations = async (id, successCallback) => {
         console.log(err);
     }
 };
+
+export const addNewOperation = async (taskId, operationData) => {
+    try {
+        const response = await fetch(`${API_URL}/tasks/${taskId}/operations`, {
+            method: "POST",
+            headers: {
+                Authorization: API_KEY,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(operationData)
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Failed to add operation. Server response:', errorData);
+            throw new Error(`Failed to add operation. Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Successfully added operation:', data);
+
+        return data;
+
+    } catch (err) {
+        console.log(err);
+    }
+}

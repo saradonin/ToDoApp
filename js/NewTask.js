@@ -18,7 +18,6 @@ const NewTask = ( { onNewTask } ) => {
 
     const handleAddTask = (e) => {
         e.preventDefault()
-        console.log(newTask)
         addNewTask(newTask)
         onNewTask()
         setNewTask({

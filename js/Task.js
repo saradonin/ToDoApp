@@ -8,6 +8,7 @@ const Task = ({ task, onUpdate }) => {
     const [currentTask, setCurrentTask] = useState(task)
     const [operations, setOperations] = useState([])
     const [addOperationForm, setAddOperationForm] = useState(false)
+    const [operationUpdateTrigger, setOperationUpdateTrigger] = useState(false)
 
     const handleDeleteTask = async () => {
         await deleteTask(currentTask.id)
@@ -25,11 +26,15 @@ const Task = ({ task, onUpdate }) => {
         setAddOperationForm(prevState => !prevState)
     }
 
+    const updateOperationList = async () => {
+        await setOperationUpdateTrigger(prevState => !prevState)
+    }
+
     useEffect(() => {
         getOperations(currentTask.id, (data) => {
             setOperations(data)
         })
-    }, []);
+    }, [operationUpdateTrigger, currentTask.id]);
 
     useEffect(() => {
         updateTask(currentTask)
@@ -75,7 +80,9 @@ const Task = ({ task, onUpdate }) => {
 
             {currentTask.status === "open" &&
                 <Operations operations={operations}
-                            form={addOperationForm} />}
+                            task={currentTask}
+                            form={addOperationForm}
+                            onNewOperation={updateOperationList}/>}
         </section>
     )
 }
