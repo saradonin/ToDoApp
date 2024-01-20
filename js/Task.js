@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from "react";
 import {deleteTask, updateTask} from "./api/tasks";
+import {getOperations} from "./api/operations";
+import Operations from "./Operations";
 
 const Task = ({ task, onUpdate }) => {
 
     const [currentTask, setCurrentTask] = useState(task)
+    const [operations, setOperations] = useState([])
+    const [addOperationForm, setAddOperationForm] = useState(false)
 
     const handleDeleteTask = async () => {
         await deleteTask(currentTask.id)
@@ -16,6 +20,16 @@ const Task = ({ task, onUpdate }) => {
             status: "closed"
         }))
     }
+
+    const handleAddOperationForm = () => {
+        setAddOperationForm(prevState => !prevState)
+    }
+
+    useEffect(() => {
+        getOperations(currentTask.id, (data) => {
+            setOperations(data)
+        })
+    }, []);
 
     useEffect(() => {
         updateTask(currentTask)
@@ -33,8 +47,10 @@ const Task = ({ task, onUpdate }) => {
 
                 <div>
                     {
-                        currentTask.status === "open" && <>
-                            <button className="btn btn-info btn-sm mr-2">
+                        currentTask.status === "open" &&
+                        <>
+                            <button className="btn btn-info btn-sm mr-2"
+                                    onClick={handleAddOperationForm}>
                                 Add operation
                                 <i className="fas fa-plus-circle ml-1"></i>
                             </button>
@@ -46,17 +62,20 @@ const Task = ({ task, onUpdate }) => {
                         </>
                     }
 
-                    {/*Przycisk usuwania ma być widoczny tylko*/}
-                    {/*jeżeli nie ma żadnych operacji w zadaniu*/}
-                    <button className="btn btn-outline-danger btn-sm ml-2"
-                            onClick={handleDeleteTask}>
-                        <i className="fas fa-trash false"></i>
-                    </button>
+                    {
+                        operations.length === 0 &&
+                        <button className="btn btn-outline-danger btn-sm ml-2"
+                                onClick={handleDeleteTask}>
+                            <i className="fas fa-trash false"></i>
+                        </button>
+                    }
+
                 </div>
             </div>
 
-
-            {/*Komponent Operations */}
+            {currentTask.status === "open" &&
+                <Operations operations={operations}
+                            form={addOperationForm} />}
         </section>
     )
 }
