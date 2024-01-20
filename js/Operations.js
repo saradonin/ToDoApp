@@ -30,7 +30,6 @@ const Operations = ({ form, task, operations, onUpdateOperation}) => {
 
     useEffect(() => {
         setOperationsList(operations)
-        onUpdateOperation()
     }, [operations, operationUpdateTrigger]);
 
     return (
