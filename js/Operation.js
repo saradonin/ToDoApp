@@ -22,13 +22,11 @@ const Operation = ({operation, task, onUpdate}) => {
 
     const hideAddTimeForm = (e) => {
         e.preventDefault()
-        e.stopPropagation()
         setAddTimeFormVisibility(false)
-        onUpdate()
     }
 
-    const handleTimeChange = async (e) => {
-        await setCurrentOperation(prevState => ({
+    const handleTimeChange = (e) => {
+        setCurrentOperation(prevState => ({
             ...prevState,
             timeSpent: e.target.value
         }))
@@ -36,13 +34,26 @@ const Operation = ({operation, task, onUpdate}) => {
 
     const handleAddTime = async (e) => {
         e.preventDefault()
-        e.stopPropagation()
+
         console.log(currentOperation)
+
         if (currentOperation.id) {
-            await updateOperation(currentOperation);
+            const data = await updateOperation(currentOperation);
             setAddTimeFormVisibility(false);
+            setCurrentOperation(prevState => ({
+                ...prevState,
+                timeSpent: data.timeSpent
+            }))
         }
     }
+
+    useEffect(() => {
+        onUpdate()
+    }, [currentOperation]);
+
+    useEffect(() => {
+        setCurrentOperation(operation);
+    }, []);
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">

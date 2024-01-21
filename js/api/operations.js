@@ -97,3 +97,23 @@ export const updateOperation = async (operationData) => {
         console.log(err);
     }
 }
+
+// export const getSingleOperations = async (operationId) => {
+//     try {
+//         const response = await fetch(`${API_URL}/operations/${operationId}`, {
+//             headers: {
+//                 Authorization: API_KEY,
+//             },
+//         });
+//
+//         const data = await response.json();
+//
+//         if (data.error || typeof successCallback !== "function") {
+//             throw new Error("Błąd!");
+//         }
+//         return data
+//
+//     } catch (err) {
+//         console.log(err);
+//     }
+// };
