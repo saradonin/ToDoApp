@@ -81,7 +81,8 @@ const Task = ({task, onUpdateTask}) => {
             <Operations operations={operations}
                         task={currentTask}
                         form={addOperationForm}
-                        onUpdateOperation={updateOperationList}/>
+                        onUpdateOperation={updateOperationList}
+                        onAddOperation={handleAddOperationForm}/>
         </section>
     )
 }

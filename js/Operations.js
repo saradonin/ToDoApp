@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Operation from "./Operation";
 import {addNewOperation} from "./api/operations";
 
-const Operations = ({ form, task, operations, onUpdateOperation}) => {
+const Operations = ({ form, task, operations, onUpdateOperation, onAddOperation}) => {
 
     const [newOperation, setNewOperation] = useState({description: "", timeSpent: 0})
     const [operationsList, setOperationsList] = useState(operations)
@@ -22,6 +22,7 @@ const Operations = ({ form, task, operations, onUpdateOperation}) => {
         const addedOperation = await addNewOperation(task.id, newOperation)
         if (addedOperation) {
             onUpdateOperation()
+            onAddOperation()
         }
         setNewOperation({description: "", timeSpent: 0})
     }
