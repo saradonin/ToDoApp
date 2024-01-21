@@ -3,6 +3,7 @@ import {deleteOperation, updateOperation} from "./api/operations";
 
 const Operation = ({operation, task, onUpdate}) => {
     const [currentOperation, setCurrentOperation] = useState(operation)
+    const [extraTime, setExtraTime] = useState('')
     const [addTimeFormVisibility, setAddTimeFormVisibility] = useState(false)
     const [updateTrigger, setUpdateTrigger] = useState(false)
 
@@ -27,28 +28,32 @@ const Operation = ({operation, task, onUpdate}) => {
     }
 
     const handleTimeChange = (e) => {
-        setCurrentOperation(prevState => ({
-            ...prevState,
-            timeSpent: e.target.value
-        }))
+        setExtraTime(e.target.value)
     }
 
     const handleAddTime = async (e) => {
         e.preventDefault()
 
         if (currentOperation.id) {
-            const data = await updateOperation(currentOperation);
-            setAddTimeFormVisibility(false);
+            const data = await updateOperation({
+                ...currentOperation,
+                timeSpent: currentOperation.timeSpent + Number(extraTime)
+            })
             setCurrentOperation(prevState => ({
                 ...prevState,
                 timeSpent: data.timeSpent
             }))
+            setAddTimeFormVisibility(false)
             setUpdateTrigger(prevState => !prevState)
+            setExtraTime('')
         }
     }
 
     useEffect(() => {
         setCurrentOperation(operation)
+    }, [operation])
+
+    useEffect(() => {
         onUpdate()
     }, [updateTrigger])
 
@@ -66,7 +71,7 @@ const Operation = ({operation, task, onUpdate}) => {
                     <div className="input-group input-group-sm">
                         <input type="number"
                                name={"time"}
-                               value={currentOperation.timeSpent}
+                               value={extraTime}
                                onChange={handleTimeChange}
                                className="form-control"
                                placeholder="Spent time in minutes"
