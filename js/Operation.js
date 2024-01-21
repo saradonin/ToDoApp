@@ -4,6 +4,7 @@ import {deleteOperation, updateOperation} from "./api/operations";
 const Operation = ({operation, task, onUpdate}) => {
     const [currentOperation, setCurrentOperation] = useState(operation)
     const [addTimeFormVisibility, setAddTimeFormVisibility] = useState(false)
+    const [updateTrigger, setUpdateTrigger] = useState(false)
 
     const handleDeleteOperation = async () => {
         await deleteOperation(operation.id)
@@ -35,8 +36,6 @@ const Operation = ({operation, task, onUpdate}) => {
     const handleAddTime = async (e) => {
         e.preventDefault()
 
-        console.log(currentOperation)
-
         if (currentOperation.id) {
             const data = await updateOperation(currentOperation);
             setAddTimeFormVisibility(false);
@@ -44,16 +43,14 @@ const Operation = ({operation, task, onUpdate}) => {
                 ...prevState,
                 timeSpent: data.timeSpent
             }))
+            setUpdateTrigger(prevState => !prevState)
         }
     }
 
     useEffect(() => {
+        setCurrentOperation(operation)
         onUpdate()
-    }, [currentOperation]);
-
-    useEffect(() => {
-        setCurrentOperation(operation);
-    }, []);
+    }, [updateTrigger])
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -86,11 +83,9 @@ const Operation = ({operation, task, onUpdate}) => {
                 </form>
             }
 
-
             {
                 !addTimeFormVisibility &&
                 <div>
-                    {/*Przycisk widoczny tylko jeżeli status zadania jest "open"*/}
                     {
                         task.status === "open" &&
                         <button className="btn btn-outline-success btn-sm mr-2"
@@ -105,7 +100,6 @@ const Operation = ({operation, task, onUpdate}) => {
                     ><i className="fas fa-trash"></i></button>
                 </div>
             }
-
         </li>
     )
 }
