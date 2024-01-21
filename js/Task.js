@@ -3,7 +3,7 @@ import {deleteTask, updateTask} from "./api/tasks";
 import {getOperations} from "./api/operations";
 import Operations from "./Operations";
 
-const Task = ({ task, onUpdateTask }) => {
+const Task = ({task, onUpdateTask}) => {
 
     const [currentTask, setCurrentTask] = useState(task)
     const [operations, setOperations] = useState([])
@@ -78,11 +78,10 @@ const Task = ({ task, onUpdateTask }) => {
                 </div>
             </div>
 
-            {currentTask.status === "open" &&
-                <Operations operations={operations}
-                            task={currentTask}
-                            form={addOperationForm}
-                            onUpdateOperation={updateOperationList}/>}
+            <Operations operations={operations}
+                        task={currentTask}
+                        form={addOperationForm}
+                        onUpdateOperation={updateOperationList}/>
         </section>
     )
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Operation from "./Operation";
-import {addNewOperation, getOperations} from "./api/operations";
+import {addNewOperation} from "./api/operations";
 
 const Operations = ({ form, task, operations, onUpdateOperation}) => {
 
@@ -29,7 +29,6 @@ const Operations = ({ form, task, operations, onUpdateOperation}) => {
     }
 
     useEffect(() => {
-        // setOperationsList(operations)
         onUpdateOperation()
     }, [operationUpdateTrigger]);
 
@@ -66,6 +65,7 @@ const Operations = ({ form, task, operations, onUpdateOperation}) => {
                     operations.map((operation) => (
                         <Operation key={operation.id}
                                    operation={operation}
+                                   task={task}
                                    onUpdate={handleUpdateOperations}/>
                     ))
                 }
