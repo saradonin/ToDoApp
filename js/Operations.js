@@ -5,7 +5,6 @@ import {addNewOperation} from "./api/operations";
 const Operations = ({ form, task, operations, onUpdateOperation, onAddOperation}) => {
 
     const [newOperation, setNewOperation] = useState({description: "", timeSpent: 0})
-    const [operationsList, setOperationsList] = useState(operations)
     const [operationUpdateTrigger, setOperationUpdateTrigger] = useState(false)
 
     const handleChange = (e) => {
@@ -33,7 +32,7 @@ const Operations = ({ form, task, operations, onUpdateOperation, onAddOperation}
 
     useEffect(() => {
         onUpdateOperation()
-    }, [operationUpdateTrigger]);
+    }, [operationUpdateTrigger])
 
     return (
         <>
@@ -60,7 +59,6 @@ const Operations = ({ form, task, operations, onUpdateOperation, onAddOperation}
                     </form>
                 </div>
             }
-
 
             <ul className="list-group list-group-flush">
                 {

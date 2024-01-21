@@ -7,15 +7,15 @@ const Operation = ({operation, task, onUpdate}) => {
     const [addTimeFormVisibility, setAddTimeFormVisibility] = useState(false)
     const [updateTrigger, setUpdateTrigger] = useState(false)
 
+    const formatTimeToString = (time) => {
+        const hours = Math.floor(time / 60)
+        const min = time % 60
+        return hours ? `${hours}h ${min}m` : `${min}m`
+    }
+
     const handleDeleteOperation = async () => {
         await deleteOperation(operation.id)
         onUpdate()
-    }
-
-    const formatTimeToString = (time) => {
-        const hours = Math.floor(time / 60);
-        const min = time % 60;
-        return hours ? `${hours}h ${min}m` : `${min}m`
     }
 
     const showAddTimeForm = () => {
