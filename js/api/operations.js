@@ -70,3 +70,30 @@ export const deleteOperation = async (operationId) => {
     }
 
 }
+
+export const updateOperation = async (operationData) => {
+    try {
+        console.log(JSON.stringify(operationData))
+        const response = await fetch(`${API_URL}/operations/${operationData.id}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: API_KEY,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(operationData)
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Failed to update operation. Server response:', errorData);
+            throw new Error(`Failed to update operation. Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Successfully updated operation:', data);
+
+        return data;
+
+    } catch (err) {
+        console.log(err);
+    }
+}

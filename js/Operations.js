@@ -19,8 +19,10 @@ const Operations = ({ form, task, operations, onUpdateOperation}) => {
     const handleAddOperation = async (e) => {
         e.preventDefault()
         console.log(newOperation)
-        await addNewOperation(task.id, newOperation)
-        onUpdateOperation()
+        const addedOperation = await addNewOperation(task.id, newOperation)
+        if (addedOperation) {
+            onUpdateOperation()
+        }
         setNewOperation({description: "", timeSpent: 0})
     }
 

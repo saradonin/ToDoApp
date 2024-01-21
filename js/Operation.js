@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {deleteOperation} from "./api/operations";
+import {deleteOperation, updateOperation} from "./api/operations";
 
 const Operation = ({operation, task, onUpdate}) => {
     const [currentOperation, setCurrentOperation] = useState(operation)
@@ -22,7 +22,9 @@ const Operation = ({operation, task, onUpdate}) => {
 
     const hideAddTimeForm = (e) => {
         e.preventDefault()
-        setAddTimeFormVisibility(true)
+        e.stopPropagation()
+        setAddTimeFormVisibility(false)
+        onUpdate()
     }
 
     const handleTimeChange = async (e) => {
@@ -32,8 +34,14 @@ const Operation = ({operation, task, onUpdate}) => {
         }))
     }
 
-    const handleAddTime = (e) => {
+    const handleAddTime = async (e) => {
         e.preventDefault()
+        e.stopPropagation()
+        console.log(currentOperation)
+        if (currentOperation.id) {
+            await updateOperation(currentOperation);
+            setAddTimeFormVisibility(false);
+        }
     }
 
     return (
@@ -56,12 +64,12 @@ const Operation = ({operation, task, onUpdate}) => {
                                placeholder="Spent time in minutes"
                                style={{width: "12rem"}}/>
                         <div className="input-group-append">
-                            <button className="btn btn-outline-success"><i
-                                    className="fas fa-save"
-                                    onClick={handleAddTime}></i></button>
-                            <button className="btn btn-outline-dark"><i
-                                    className="fas fa-times false"
-                                    onClick={hideAddTimeForm}></i></button>
+                            <button className="btn btn-outline-success"
+                                    onClick={handleAddTime}><i
+                                    className="fas fa-save"></i></button>
+                            <button className="btn btn-outline-dark"
+                                    onClick={hideAddTimeForm}><i
+                                    className="fas fa-times false"></i></button>
                         </div>
                     </div>
                 </form>
@@ -80,7 +88,6 @@ const Operation = ({operation, task, onUpdate}) => {
                             <i className="fas fa-clock ml-1"></i>
                         </button>
                     }
-
 
                     <button className="btn btn-outline-danger btn-sm"
                             onClick={handleDeleteOperation}
