@@ -25,6 +25,11 @@ export const getOperations = async (id, successCallback) => {
     }
 };
 
+/**
+ * Add new operation
+ * @param {number} taskId - ID of the task to add operation.
+ * @param {object} operationData = Data for the new operation.
+ */
 export const addNewOperation = async (taskId, operationData) => {
     try {
         const response = await fetch(`${API_URL}/tasks/${taskId}/operations`, {
@@ -50,6 +55,10 @@ export const addNewOperation = async (taskId, operationData) => {
     }
 }
 
+/**
+ * Delete operation
+ * @param {number} operationId - ID of the operation to delete.
+ */
 export const deleteOperation = async (operationId) => {
     try {
         const response = await fetch(`${API_URL}/operations/${operationId}`, {
@@ -71,6 +80,10 @@ export const deleteOperation = async (operationId) => {
 
 }
 
+/**
+ * Update operation
+ * @param {object} operationData - Updated data of the operation.
+ */
 export const updateOperation = async (operationData) => {
     try {
         console.log(JSON.stringify(operationData))
@@ -98,22 +111,3 @@ export const updateOperation = async (operationData) => {
     }
 }
 
-// export const getSingleOperations = async (operationId) => {
-//     try {
-//         const response = await fetch(`${API_URL}/operations/${operationId}`, {
-//             headers: {
-//                 Authorization: API_KEY,
-//             },
-//         });
-//
-//         const data = await response.json();
-//
-//         if (data.error || typeof successCallback !== "function") {
-//             throw new Error("Błąd!");
-//         }
-//         return data
-//
-//     } catch (err) {
-//         console.log(err);
-//     }
-// };

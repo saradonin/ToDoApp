@@ -25,8 +25,8 @@ export const getTasks = async (successCallback) => {
 };
 
 /**
- * Adds new task
- * @param taskData
+ * Add new task
+ * @param {object} taskData - Data for the new task.
  */
 export const addNewTask = async (taskData) => {
     try {
@@ -55,6 +55,10 @@ export const addNewTask = async (taskData) => {
     }
 }
 
+/**
+ * Delete task
+ * @param {number} taskId - Id of the task to delete.
+ */
 export const deleteTask = async (taskId) => {
     try {
         const response = await fetch(`${API_URL}/tasks/${taskId}`, {
@@ -74,6 +78,10 @@ export const deleteTask = async (taskId) => {
     }
 }
 
+/**
+ * Update task
+ * @param {object} taskData - Updated data of the task.
+ */
 export const updateTask = async (taskData) => {
     try {
         console.log(JSON.stringify(taskData))
