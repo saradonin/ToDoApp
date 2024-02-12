@@ -16,3 +16,6 @@ The app is built using React library, and it communicates with a RESTful API to 
 1. Clone the repository to your local machine.
 2. Run `npm install` to install dependencies.
 3. Run `npm start` to run the app in your browser.
+
+![ToDoApp](https://github.com/saradonin/ToDoApp/assets/124811561/07134906-89ad-4ca5-8ec7-8bcdeb3c016c)
+
